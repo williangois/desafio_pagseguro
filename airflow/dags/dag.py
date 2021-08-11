@@ -1,20 +1,14 @@
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.models import Variable
-from datetime import date, datetime
+from airflow.utils.dates import days_ago
+from datetime import date
 import pandas as pd
 from sqlalchemy import create_engine
 import numpy as np
 from opendatasets.utils.kaggle_api import download_kaggle_dataset
 import json
-from airflow.utils.dates import days_ago
-
-def __create_credentials():
-    __user_name = Variable.get("KAGGLE_USERNAME")
-    __key = Variable.get("KAGGLE_KEY")
-    __kaggle_json = {"username":__user_name,"key":__key}
-    with open("kaggle.json", "w") as f:
-        json.dump(__kaggle_json, f)
+from get_data import __create_credentials
 
 def __get_df_by_csv(dir):
     return pd.read_csv(dir, header=0, quotechar="'") 
@@ -97,7 +91,7 @@ def __record_data(engine, df_dict_list):
         )
         
 def __get_data():
-    __create_credentials
+    __create_credentials()
     download_kaggle_dataset("https://www.kaggle.com/ealaxi/banksim1?select=bs140513_032310.csv", data_dir='./tmp', force=False)
  
 def __transform_data():
