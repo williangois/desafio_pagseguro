@@ -12,4 +12,4 @@ def __create_credentials():
         
 def get():
     __create_credentials()
-    download_kaggle_dataset("https://www.kaggle.com/ealaxi/banksim1?select=bs140513_032310.csv", data_dir='./tmp', force=False)
+    download_kaggle_dataset("https://www.kaggle.com/ealaxi/banksim1?select=bs140513_032310.csv", data_dir='./tmp', force=True)
